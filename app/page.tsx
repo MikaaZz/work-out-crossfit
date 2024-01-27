@@ -1,32 +1,12 @@
-"use client";
-import { useState } from "react";
+import { prisma } from "@/lib/prisma";
 import { User } from "@prisma/client";
-import { createUser } from "./api/v1/user";
 
-export default function Home() {
-  const [users, setUsers] = useState<User[]>([]);
+export default async function Home() {
+  const user = await prisma.user.findFirst({
+    where: {
+      email: "test@test.com",
+    },
+  });
 
-  const insertUser = async () => {
-    createUser();
-  };
-  const fetchUsers = async () => {
-    const response = await fetch("/api/v1/users");
-    console.log(response);
-    const users = await response.json();
-    setUsers(users);
-  };
-
-  fetchUsers();
-
-  return (
-    <main>
-      <h1>Teste</h1>
-      <ul>
-        {users.map((user: User) => (
-          <li key={user.uid}>{user.name}</li>
-        ))}
-      </ul>
-      <button onClick={insertUser}>Criar usuário</button>
-    </main>
-  );
+  return <main>Hello, {user?.name}</main>;
 }

@@ -1,12 +1,16 @@
-import { prisma } from "@/lib/prisma";
-import { User } from "@prisma/client";
+import { getUsersData } from "./actions/getUserData";
+import RegisterForm from "./ui/Register/Register";
 
 export default async function Home() {
-  const user = await prisma.user.findFirst({
-    where: {
-      email: "test@test.com",
-    },
-  });
+  const data = await getUsersData();
+  const { user, users } = data;
 
-  return <main>Hello, {user?.name}</main>;
+  return (
+    <main>
+      <h1>Hello, {user?.name}</h1>
+      <h2>Users</h2>
+
+      <RegisterForm users={users} />
+    </main>
+  );
 }

@@ -8,13 +8,13 @@ export default async function Home() {
   const user = await getLoggedUser(1);
 
   return (
-    <main>
+    <section>
       <h1>Hello, {user?.name}</h1>
       <h2>Users</h2>
       <Suspense fallback={<p>Loading...</p>}>
         <UsersList />
       </Suspense>
       <Form />
-    </main>
+    </section>
   );
 }

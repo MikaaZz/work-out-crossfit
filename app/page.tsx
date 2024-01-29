@@ -1,16 +1,20 @@
-import { getUsersData } from "./actions/getUserData";
-import RegisterForm from "./ui/Register/Register";
+import { Suspense } from "react";
+import { getLoggedUser } from "./actions/user/getLoggedUser";
+
+import Form from "./ui/Form/Form";
+import UsersList from "./ui/List/List";
 
 export default async function Home() {
-  const data = await getUsersData();
-  const { user, users } = data;
+  const user = await getLoggedUser(1);
 
   return (
     <main>
       <h1>Hello, {user?.name}</h1>
       <h2>Users</h2>
-
-      <RegisterForm users={users} />
+      <Suspense fallback={<p>Loading...</p>}>
+        <UsersList />
+      </Suspense>
+      <Form />
     </main>
   );
 }

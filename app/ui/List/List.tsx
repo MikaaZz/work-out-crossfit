@@ -1,6 +1,11 @@
+import { getUsers } from "@/app/actions/user/getUsers";
 import { User } from "@prisma/client";
+import { unstable_cache, unstable_noStore } from "next/cache";
 
-export default function UsersList({ users }: { users: User[] }) {
+export default async function UsersList() {
+  unstable_noStore();
+  const users: User[] = await getUsers();
+
   return (
     <ul>
       {users.map((user) => (

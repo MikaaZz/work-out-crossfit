@@ -2,8 +2,12 @@
 
 import { User } from "@prisma/client";
 
-export async function createUser(user: User) {
+export async function createUser(data: FormData) {
   try {
+    const user = {
+      name: data.get("name")?.toString() ?? "No name register",
+      email: data.get("email")?.toString() ?? "No e-mail register",
+    };
     const response = await fetch("http://localhost:3000/api/v1/user", {
       method: "POST",
       body: JSON.stringify(user),

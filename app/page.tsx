@@ -1,16 +1,19 @@
+import "@/styles/globals.css";
 import { Suspense } from "react";
-import { getLoggedUser } from "./actions/user/getLoggedUser";
 
-import Form from "./ui/Form/Form";
-import UsersList from "./ui/List/List";
+import Form from "./components/Form/Form";
+import UsersList from "./components/List/List";
+import { getServerSession } from "next-auth";
 
 export default async function Home() {
-  const user = await getLoggedUser(1);
+  const session = await getServerSession();
 
   return (
     <section>
-      <h1>Hello, {user?.name}</h1>
-      <h2>Users</h2>
+      <h1>
+        Hello, {session?.user?.name ? session?.user?.name : "Not logged user"}
+      </h1>
+      <h2>This is the list of users in my app:</h2>
       <Suspense fallback={<p>Loading...</p>}>
         <UsersList />
       </Suspense>

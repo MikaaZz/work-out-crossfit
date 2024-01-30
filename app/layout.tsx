@@ -35,7 +35,7 @@ export default async function RootLayout({
         )}
       >
         <SessionProvider session={session}>
-          <main className={cn("flex items-start justify-start")}>
+          <main className={cn("flex items-start justify-start bg-slate-800")}>
             <NavMenu />
             {children}
           </main>
